@@ -1,6 +1,6 @@
 import java.util.*;
 
-class MultiWayTape<T> extends List<T> {
+class MultiWayTape<T> implements List<T> {
 
     private final ArrayList<T> positiveEnd;
     private final ArrayList<T> negativeEnd;
@@ -126,9 +126,8 @@ class MultiWayTape<T> extends List<T> {
     public T set(int index, T element)
     {
 //        return index >= 0 ? positiveEnd.set(index, element) : negativeEnd.set(Math.abs(++index), element);
-        if (index >= 0) {
-
-        }
+        if (index >= 0) return positiveEnd.set(index, element);
+        else return negativeEnd.set(-index-1, element);
     }
 
     @Override
@@ -176,6 +175,7 @@ class MultiWayTape<T> extends List<T> {
     {
         MultiWayTape<T> sub = new MultiWayTape<>(fromIndex, toIndex);
         for (int i = negativeSize(); i < positiveSize(); i++) sub.set(i, this.get(i));
+        return sub;
     }
 
     int positiveSize()
